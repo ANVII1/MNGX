@@ -13,6 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin textures/Enemy.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Enemy.png
+
 #begin textures/HeroAnim.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -24,4 +36,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/HeroAnim.png
+
+#begin textures/stone.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=True
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=True
+/processorParam:MakeSquare=True
+/processorParam:TextureFormat=Color
+/build:textures/stone.png
 

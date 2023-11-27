@@ -24,6 +24,7 @@ namespace MNGX
             Globals.SpriteBatch = new SpriteBatch(GraphicsDevice);
             Globals.sceneManager = new SceneManager();
             Globals.Content = Content;
+            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             base.Initialize();
         }
 
@@ -45,9 +46,11 @@ namespace MNGX
         // //////// Отрисовка
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            Globals.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,SamplerState.PointClamp);
+            GraphicsDevice.Clear(Color.Black);
+
+            Globals.SpriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend,SamplerState.PointClamp);
+
             Globals.sceneManager.draw();
 
             Globals.SpriteBatch.End();

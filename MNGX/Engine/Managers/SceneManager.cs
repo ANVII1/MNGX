@@ -12,13 +12,13 @@ public class SceneManager
     private List<Scene> scenes;
     private int active_scene;
 
-    public SceneManager() 
+    public SceneManager()
     {
         this.scenes = new List<Scene>();
         active_scene = 0;
     }
 
-    public void addScene(Scene scene) 
+    public void addScene(Scene scene)
     {
         scenes.Add(scene);
     }
@@ -33,7 +33,6 @@ public class SceneManager
         {
             throw new Exception("Не нинциализировано ни одной сцены");
         }
-        
     }
 
     public void draw()
@@ -46,7 +45,6 @@ public class SceneManager
         {
             throw new Exception("Не нинциализировано ни одной сцены");
         }
-        
     }
 
 }
@@ -84,8 +82,11 @@ public class PlayScene : Scene
     }
     public override void createGameObjects()
     {
+        gameObjects.Add(new Enemy(new Vector2(500, 300)));
         // Добавляем ГГ
-        gameObjects.Add(new Hero(new Vector2(300,300)));
+        gameObjects.Add(new Hero(new Vector2(300, 300)));
+        gameObjects.Add(new Room(new Vector2(200,200)));
         
+
     }
 }
