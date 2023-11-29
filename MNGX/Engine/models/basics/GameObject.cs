@@ -12,7 +12,7 @@ public abstract class GameObject
     public GameObjectType type;
 
     protected float layerDepth;
-    protected Vector2 position;
+    public Vector2 position { get; protected set; }
     protected float rotation;
     protected Vector2 origin;
     protected float scale;
@@ -61,5 +61,5 @@ public enum ContactType
 
 public enum GameObjectType
 {
-    enemy, player, floor, wall
+    enemy, player, floor, wall, projectile
 }

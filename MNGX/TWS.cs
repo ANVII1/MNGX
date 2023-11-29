@@ -2,7 +2,10 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MNGX.Engine;
+using MNGX.Engine.Core;
 using MNGX.Engine.Managers;
+using MNGX.Engine.Scenes;
+using System;
 
 namespace MNGX
 {
@@ -15,7 +18,15 @@ namespace MNGX
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            
+            Window.ClientSizeChanged += OnResize;
+            Globals.ScreenWidth = _graphics.PreferredBackBufferWidth;
+            Globals.ScreenHeight = _graphics.PreferredBackBufferHeight;
+        }
+
+        private void OnResize(Object sender, EventArgs e) 
+        {
+            Globals.ScreenWidth = _graphics.PreferredBackBufferWidth;
+            Globals.ScreenHeight = _graphics.PreferredBackBufferHeight;
         }
 
         // //////// Инициализация
@@ -24,7 +35,10 @@ namespace MNGX
             Globals.SpriteBatch = new SpriteBatch(GraphicsDevice);
             Globals.sceneManager = new SceneManager();
             Globals.Content = Content;
+            Globals.camera = new Camera();
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            Window.AllowUserResizing = true;
+            
             base.Initialize();
         }
 
@@ -49,7 +63,7 @@ namespace MNGX
 
             GraphicsDevice.Clear(Color.Black);
 
-            Globals.SpriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend,SamplerState.PointClamp);
+            Globals.SpriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend,SamplerState.PointClamp, transformMatrix : Globals.camera.Transform);
 
             Globals.sceneManager.draw();
 

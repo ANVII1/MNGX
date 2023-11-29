@@ -37,6 +37,18 @@
 /processorParam:TextureFormat=Color
 /build:textures/HeroAnim.png
 
+#begin textures/Projectile.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Projectile.png
+
 #begin textures/stone.png
 /importer:TextureImporter
 /processor:TextureProcessor

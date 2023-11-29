@@ -55,6 +55,7 @@ public class Animation
         {
             _frameTimeLeft += _frameTime;
             _frame = (_frame + 1) % _frames;
+
         }
     }
 

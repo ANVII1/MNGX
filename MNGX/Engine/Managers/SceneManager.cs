@@ -1,9 +1,6 @@
 ﻿using MNGX.Engine.models;
 using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
 
 namespace MNGX.Engine.Managers;
 
@@ -23,6 +20,11 @@ public class SceneManager
         scenes.Add(scene);
     }
 
+    public void addObjectToActiveScene(GameObject gameObject) 
+    {
+        scenes[active_scene].addObject(gameObject);
+    }
+
     public void update() 
     {
         try 
@@ -33,6 +35,11 @@ public class SceneManager
         {
             throw new Exception("Не нинциализировано ни одной сцены");
         }
+    }
+
+    public Scene getActiveScene() 
+    {
+        return scenes[active_scene];
     }
 
     public void draw()
@@ -51,10 +58,15 @@ public class SceneManager
 
 public abstract class Scene 
 {
-    protected List<GameObject> gameObjects = new List<GameObject>();
+    public List<GameObject> gameObjects = new List<GameObject>();
     public states state = states.active;
 
     public abstract void createGameObjects(); // В нём создаём все объекты
+
+    public void addObject(GameObject gameObject) 
+    {
+        gameObjects.Add(gameObject);
+    }
 
     public virtual void update() 
     {
@@ -71,22 +83,5 @@ public abstract class Scene
     public enum states {
         paused,
         active
-    }
-}
-
-public class PlayScene : Scene
-{
-    public PlayScene() 
-    {
-        this.createGameObjects();
-    }
-    public override void createGameObjects()
-    {
-        gameObjects.Add(new Enemy(new Vector2(500, 300)));
-        // Добавляем ГГ
-        gameObjects.Add(new Hero(new Vector2(300, 300)));
-        gameObjects.Add(new Room(new Vector2(200,200)));
-        
-
     }
 }

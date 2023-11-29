@@ -6,6 +6,7 @@ namespace MNGX.Engine.models;
 // ///////////////////// ОБЪЕКТЫ БЕЗ АНИМАЦИИ
 public class StaticGameObject : GameObject
 {
+
     protected Texture2D texture;
     private Rectangle commonRectangle;
     private Rectangle elementRectangle;
