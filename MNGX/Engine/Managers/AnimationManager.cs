@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using static System.Formats.Asn1.AsnWriter;
+using System.ComponentModel.DataAnnotations;
 
 namespace MNGX.Engine.Managers;
 
@@ -14,8 +16,10 @@ public class Animation
     private readonly float _frameTime;
     private float _frameTimeLeft;
     private bool _active = true;
+    private float scale;
+    public Vector2 center { get; private set; }
 
-    public Animation(Texture2D texture, int framesColumnCount, int framesRowsCount, float frameTime, int currentRow = 1)
+    public Animation(Texture2D texture, int framesColumnCount, int framesRowsCount, float frameTime, int currentRow = 1, float scale = 1)
     {
         _texture = texture;
         _frameTime = frameTime;
@@ -28,6 +32,8 @@ public class Animation
         {
             _sourceRectangles.Add(new Rectangle(i * frameWidth, (currentRow - 1) * frameHeight, frameWidth, frameHeight));
         }
+        center = new Vector2(frameWidth / 2 * scale, frameHeight / 2 * scale);
+        this.scale = scale;
     }
     public void Stop()
     {
@@ -59,7 +65,7 @@ public class Animation
         }
     }
 
-    public void draw(Vector2 pos, float rotation, float scale, float layerDepth, SpriteEffects spriteEffects)
+    public void draw(Vector2 pos, float rotation, float layerDepth, SpriteEffects spriteEffects)
     {
         Globals.SpriteBatch.Draw(_texture, pos, _sourceRectangles[_frame], Color.White, rotation, Vector2.Zero, scale, spriteEffects, layerDepth);
     }

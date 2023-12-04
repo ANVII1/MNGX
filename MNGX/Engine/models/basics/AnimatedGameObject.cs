@@ -21,7 +21,7 @@ public class AnimatedGameObject : GameObject
     )
     : base(type, position, rotation, scale, layerDepth, spriteEffects)
     {
-
+        this.scale = scale;
     }
 
     public void AddAnimation(string key, Animation animation)
@@ -47,11 +47,16 @@ public class AnimatedGameObject : GameObject
 
     public override void draw()
     {
-        anims[lastKey].draw(position, rotation, scale, layerDepth, spriteEffects);
+        anims[lastKey].draw(position, rotation, layerDepth, spriteEffects);
     }
 
     public override Rectangle getCurrnetRectangle()
     {
         return anims[lastKey].getCurrentRectangle();
+    }
+
+    public override Vector2 getCenter()
+    {
+        return position + anims[lastKey].center;
     }
 }

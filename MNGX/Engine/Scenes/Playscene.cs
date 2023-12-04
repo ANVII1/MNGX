@@ -3,6 +3,7 @@ using MNGX.Engine.models;
 using Microsoft.Xna.Framework;
 using static MNGX.Engine.Managers.Scene;
 using System.Linq;
+using Microsoft.Xna.Framework.Input;
 
 namespace MNGX.Engine.Scenes;
 public class PlayScene : Scene
@@ -24,9 +25,8 @@ public class PlayScene : Scene
     {
         if (state == states.paused)
             return;
-        Globals.camera.Follow(gameObjects[0]);
+        Globals.camera.HeroFollow(gameObjects[0]);
         foreach (GameObject obj in gameObjects.ToList())
             obj.update();
-
     }
 }

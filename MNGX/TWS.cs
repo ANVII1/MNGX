@@ -6,6 +6,7 @@ using MNGX.Engine.Core;
 using MNGX.Engine.Managers;
 using MNGX.Engine.Scenes;
 using System;
+using System.Reflection.Metadata;
 
 namespace MNGX
 {
@@ -23,10 +24,21 @@ namespace MNGX
             Globals.ScreenHeight = _graphics.PreferredBackBufferHeight;
         }
 
+        // //////// Window resize Callback 
         private void OnResize(Object sender, EventArgs e) 
         {
-            Globals.ScreenWidth = _graphics.PreferredBackBufferWidth;
-            Globals.ScreenHeight = _graphics.PreferredBackBufferHeight;
+            if ((_graphics.PreferredBackBufferWidth != _graphics.GraphicsDevice.Viewport.Width) ||
+            (_graphics.PreferredBackBufferHeight != _graphics.GraphicsDevice.Viewport.Height))
+            {
+                _graphics.PreferredBackBufferWidth = _graphics.GraphicsDevice.Viewport.Width;
+                _graphics.PreferredBackBufferHeight = _graphics.GraphicsDevice.Viewport.Height;
+                _graphics.ApplyChanges();
+
+                Globals.ScreenWidth = _graphics.PreferredBackBufferWidth;
+                Globals.ScreenHeight = _graphics.PreferredBackBufferHeight;
+            }
+
+
         }
 
         // //////// Инициализация
@@ -60,9 +72,8 @@ namespace MNGX
         // //////// Отрисовка
         protected override void Draw(GameTime gameTime)
         {
-
             GraphicsDevice.Clear(Color.Black);
-
+            Window.Title = $"MNGX {Globals.ScreenWidth}X{Globals.ScreenHeight}";
             Globals.SpriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend,SamplerState.PointClamp, transformMatrix : Globals.camera.Transform);
 
             Globals.sceneManager.draw();

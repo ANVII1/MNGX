@@ -28,6 +28,7 @@ public class StaticGameObject : GameObject
         this.sizeScale = sizeScale;
         commonRectangle = new Rectangle(0, 0, texture.Width * sizeScale, texture.Height * sizeScale);
         elementRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
+        
     }
 
     public override void draw()
@@ -50,6 +51,14 @@ public class StaticGameObject : GameObject
             }
         }
     }
+    public override Vector2 getCenter()
+    {
+        return new Vector2(
+            position.X + (texture.Width * sizeScale / 2),
+            position.Y + (texture.Height * sizeScale / 2)
+            );
+    }
+
     public override Rectangle getCurrnetRectangle()
     {
         return commonRectangle;

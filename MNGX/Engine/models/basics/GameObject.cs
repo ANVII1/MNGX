@@ -7,12 +7,16 @@ public abstract class GameObject
 {
     protected Vector2 speed;
     protected Vector2 speedlimit;
+
+    
+
     protected float weight;
     public bool colision;
     public GameObjectType type;
 
     protected float layerDepth;
     public Vector2 position { get; protected set; }
+    
     protected float rotation;
     protected Vector2 origin;
     protected float scale;
@@ -30,7 +34,7 @@ public abstract class GameObject
     }
     public virtual void update() { }
     public virtual void draw() { }
-
+    public abstract Vector2 getCenter();
     public abstract Rectangle getCurrnetRectangle();
 
     protected ContactType CheckCollision(Rectangle selfRect, Rectangle rect)
