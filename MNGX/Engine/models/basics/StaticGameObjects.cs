@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System;
 using Microsoft.Xna.Framework;
+using MNGX.Engine.Core;
 
 namespace MNGX.Engine.models;
 // ///////////////////// ОБЪЕКТЫ БЕЗ АНИМАЦИИ
@@ -26,9 +27,9 @@ public class StaticGameObject : GameObject
     {
         this.texture = texture;
         this.sizeScale = sizeScale;
-        commonRectangle = new Rectangle(0, 0, texture.Width * sizeScale, texture.Height * sizeScale);
+        commonRectangle = new Rectangle(0, 0, (int)(texture.Width * sizeScale * scale), (int)(texture.Height * sizeScale * scale));
+        // commonRectangle - Это общий прямоугольник для всех    
         elementRectangle = new Rectangle(0, 0, texture.Width, texture.Height);
-        
     }
 
     public override void draw()
@@ -40,27 +41,43 @@ public class StaticGameObject : GameObject
         var ssheight = sizeScale;
         while (ssheight > 0)
         {
+            // *
+            // *
+            // * чтож это полное дермьо, нужно будет переписать.
+            // *
+            // *
+
             sswidth = sizeScale;
             ssheight--;
             while (sswidth > 0)
             {
                 sswidth--;
                 var offset = new Vector2((sswidth * scale * texture.Width) + position.X, (ssheight * scale * texture.Height) + position.Y);
-                Globals.SpriteBatch.Draw(texture, offset, elementRectangle, Color.White, rotation, origin, scale, spriteEffects, layerDepth);
+                Globals.SpriteBatch.Draw(texture, offset, elementRectangle, color, rotation, origin, scale, spriteEffects, layerDepth);
 
             }
         }
     }
-    public override Vector2 getCenter()
+
+    public override Vector2 Position
     {
-        return new Vector2(
-            position.X + (texture.Width * sizeScale / 2),
-            position.Y + (texture.Height * sizeScale / 2)
+        get {
+            return new Vector2(
+            position.X + (texture.Width * sizeScale * scale / 2 ),
+            position.Y + (texture.Height * sizeScale * scale / 2 )
             );
+        }
+        protected set
+        {
+            position = value;
+        }
     }
 
-    public override Rectangle getCurrnetRectangle()
+    public override Rect Collision_Rect
     {
-        return commonRectangle;
+        get 
+        {
+            return new Rect(Position.X,Position.Y, texture.Width * scale, texture.Height * scale);
+        }
     }
 }

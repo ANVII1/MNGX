@@ -3,11 +3,14 @@ using MNGX.Engine.Managers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
+
 using System.Threading;
+using MNGX.Engine.Core;
 
 namespace MNGX.Engine.models;
 public class Hero : AnimatedGameObject
 {
+    Weapon weapon;
     public Hero(Vector2 position)
         : base(GameObjectType.player, position, 2.0f, layerDepth:0.7f)
     {
@@ -28,11 +31,18 @@ public class Hero : AnimatedGameObject
         speedlimit.Y = 4f;
         weight = 1.0f;
 
+        weapon = new AssaultRifle(this);
+
     }
         
     public override void update()
     {
         var ms = Mouse.GetState();
+
+        double angle = Math.Atan2(
+            position.Y - ms.Y,
+            position.X - ms.X
+            );
 
         KeyboardState kb = Keyboard.GetState();
         updateAnimation("idleRight");
@@ -54,19 +64,9 @@ public class Hero : AnimatedGameObject
         }
         if (ms.LeftButton == ButtonState.Pressed)
         {
-            Random r = new Random();
-            var targetPos = Globals.camera.ScreenToWorldSpace(new Vector2(ms.X, ms.Y));
-            targetPos.X += (float) r.Next(-30, 30);
-            targetPos.Y += (float)r.Next(-30, 30);
-            Globals.sceneManager.addObjectToActiveScene(
-                new Projectile( 
-                    getCenter(), 
-                targetPos,
-                10));
+            weapon.use();
         }
         position += speed;
-
-
 
         // inert
         if (kb.IsKeyUp(Keys.W)  && kb.IsKeyUp(Keys.S))
@@ -86,6 +86,49 @@ public class Hero : AnimatedGameObject
     }
 }
 
+public abstract class Weapon 
+{
+    protected float lastShoot;
+    protected float delay;
+    protected float recoil;
+    protected Hero owner;
+    protected int spread;
+    protected float ProjectileSpeed;
+    protected anTimer span;
+
+    public abstract void use();
+}
+
+public class AssaultRifle : Weapon
+{
+    public AssaultRifle(Hero owner) 
+    { 
+        this.owner = owner;
+        delay = 2;
+        span = new anTimer(200);
+        recoil = 0;
+        spread = 0;
+        ProjectileSpeed = 10;
+    }
+    public override void use()
+    {
+        if (!span.checkDelay())
+            return;
+        
+        var ms = Mouse.GetState();
+
+        Random r = new Random();
+        var targetPos = Globals.camera.ScreenToWorldSpace(new Vector2(ms.X, ms.Y));
+        targetPos.X += (float)r.Next(-spread, spread);
+        targetPos.Y += (float)r.Next(-spread, spread);
+        Globals.sceneManager.addObjectToActiveScene(
+            new Projectile(
+                owner.Position,
+                targetPos,
+                ProjectileSpeed));
+    }
+}
+
 public class Projectile : StaticGameObject
 {
     public Projectile(Vector2 position, Vector2 target, float speed) 
@@ -100,6 +143,7 @@ public class Projectile : StaticGameObject
             position.Y-target.Y,
             position.X-target.X
             );
+
         this.speed = new Vector2(
             -(float) Math.Cos(angle) * speed,
             -(float) Math.Sin(angle) * speed

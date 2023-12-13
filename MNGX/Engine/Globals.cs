@@ -9,6 +9,8 @@ namespace MNGX.Engine
     public static class Globals
     {
         public static float TotalSeconds { get; set; }
+        public static float TotalGameTime { get; set; }
+        public static GameWindow gameWindow { get; set; }
         public static ContentManager Content { get; set; }
         public static SpriteBatch SpriteBatch { get; set; }
         public static SceneManager sceneManager { get; set; }
@@ -21,6 +23,7 @@ namespace MNGX.Engine
         public static void Update(GameTime gt)
         {
             TotalSeconds = (float)gt.ElapsedGameTime.TotalSeconds;
+            TotalGameTime = (float)gt.TotalGameTime.TotalMilliseconds;
         }
     }
 }

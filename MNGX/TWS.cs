@@ -47,6 +47,7 @@ namespace MNGX
             Globals.SpriteBatch = new SpriteBatch(GraphicsDevice);
             Globals.sceneManager = new SceneManager();
             Globals.Content = Content;
+            Globals.gameWindow = Window;
             Globals.camera = new Camera();
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             Window.AllowUserResizing = true;
@@ -73,7 +74,7 @@ namespace MNGX
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            Window.Title = $"MNGX {Globals.ScreenWidth}X{Globals.ScreenHeight}";
+            // Window.Title = $"MNGX {Globals.ScreenWidth}X{Globals.ScreenHeight}";
             Globals.SpriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend,SamplerState.PointClamp, transformMatrix : Globals.camera.Transform);
 
             Globals.sceneManager.draw();

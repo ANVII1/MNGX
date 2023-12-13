@@ -49,10 +49,10 @@ public class Camera
         var ms = Mouse.GetState();
         Vector2 cursor = ScreenToWorldSpace(new Vector2(ms.X,ms.Y));
 
-        var originRect = origin.getCurrnetRectangle();
+        var originRect = origin.Collision_Rect;
         var target = new Vector2(
-            ((origin.position.X - (originRect.Width / 2) + cursor.X) / 2),
-            ((origin.position.Y - (originRect.Height / 2) + cursor.Y) / 2)
+            ((originRect.X  + cursor.X) / 2),
+            ((originRect.Y + cursor.Y) / 2)
             );
 
         Follow(target);

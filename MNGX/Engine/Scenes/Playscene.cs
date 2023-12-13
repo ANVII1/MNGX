@@ -1,9 +1,7 @@
 ﻿using MNGX.Engine.Managers;
 using MNGX.Engine.models;
 using Microsoft.Xna.Framework;
-using static MNGX.Engine.Managers.Scene;
 using System.Linq;
-using Microsoft.Xna.Framework.Input;
 
 namespace MNGX.Engine.Scenes;
 public class PlayScene : Scene
@@ -15,8 +13,7 @@ public class PlayScene : Scene
     public override void createGameObjects()
     {
         gameObjects.Add(new Hero(new Vector2(300, 300)));
-        gameObjects.Add(new Enemy(new Vector2(500, 300)));
-        // Добавляем ГГ
+        gameObjects.Add(new Enemy(new Vector2(300, 300)));
         gameObjects.Add(new Room(new Vector2(200, 200)));
 
     }

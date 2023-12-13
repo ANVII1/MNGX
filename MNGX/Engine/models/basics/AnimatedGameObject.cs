@@ -2,6 +2,7 @@
 using MNGX.Engine.Managers;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using MNGX.Engine.Core;
 
 namespace MNGX.Engine.models;
 
@@ -50,13 +51,26 @@ public class AnimatedGameObject : GameObject
         anims[lastKey].draw(position, rotation, layerDepth, spriteEffects);
     }
 
-    public override Rectangle getCurrnetRectangle()
+    public override Rect Collision_Rect
     {
-        return anims[lastKey].getCurrentRectangle();
+        get
+        {
+            var rect = anims[lastKey].CollisonRect();
+            rect.X = Position.X + (rect.Width / 2); 
+            rect.Y = Position.Y + (rect.Height / 2);
+            return rect;
+        }
     }
 
-    public override Vector2 getCenter()
+    public override Vector2 Position 
     {
-        return position + anims[lastKey].center;
+        get 
+        {
+            return position + anims[lastKey].center;
+        }
+        protected set 
+        {
+            position = value;
+        } 
     }
 }

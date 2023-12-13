@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
-using static System.Formats.Asn1.AsnWriter;
-using System.ComponentModel.DataAnnotations;
+using MNGX.Engine.Core;
 
 namespace MNGX.Engine.Managers;
 
@@ -12,6 +10,7 @@ public class Animation
     private readonly Texture2D _texture;
     private readonly List<Rectangle> _sourceRectangles = new();
     private readonly int _frames;
+    private Rect collision_rect;
     private int _frame;
     private readonly float _frameTime;
     private float _frameTimeLeft;
@@ -27,6 +26,8 @@ public class Animation
         _frames = framesColumnCount;
         var frameWidth = _texture.Width / framesColumnCount;
         var frameHeight = _texture.Height / framesRowsCount;
+
+        collision_rect = new Rect(0,0, frameWidth * scale, frameHeight * scale);
 
         for (int i = 0; i < _frames; i++)
         {
@@ -70,9 +71,9 @@ public class Animation
         Globals.SpriteBatch.Draw(_texture, pos, _sourceRectangles[_frame], Color.White, rotation, Vector2.Zero, scale, spriteEffects, layerDepth);
     }
 
-    public Rectangle getCurrentRectangle()
+    public Rect CollisonRect()
     {
-        return _sourceRectangles[_frame];
+        return collision_rect;
     }
 
 }
